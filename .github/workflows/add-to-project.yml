@@ -1,0 +1,27 @@
+# Adiciona toda issue nova deste repositório ao Project da Fase 5
+# (Async-And-Furious/projects/7). O plano Free do GitHub permite só uma
+# automação nativa de auto-add por Project, então os 3 repos da Fase 5 usam
+# esta action.
+#
+# Requer o secret ADD_TO_PROJECT_PAT (organização ou repositório). De
+# preferência um PAT fine-grained com owner Async-And-Furious, Organization
+# permissions > Projects: Read and write, e Repository permissions > Issues e
+# Pull requests: Read-only. Alternativa: PAT classic com o escopo `project`
+# (`repo` só seria necessário se o repositório fosse privado).
+name: Adicionar ao Project da Fase 5
+
+on:
+  issues:
+    types: [opened, reopened, transferred]
+
+permissions: {}
+
+jobs:
+  add-to-project:
+    name: Adicionar issue ao Project 7
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v2.0.0
+        with:
+          project-url: https://github.com/orgs/Async-And-Furious/projects/7
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
